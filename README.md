@@ -98,4 +98,41 @@ Przykład:
 - input: \[1 10 2 9 3 8 4 7 5 6\]
 - output (jeden z dopuszczalnych): \[7 8 9 10 3 1 5 6 2 4\]
 
-### Zadania trudniejsze
+### Zadanie trudniejsze
+#### Ćwiczenie XI - indeksy sortowania
+Napisz algorytm `sorted_indices`, o sygnaturze:
+```C++
+template < typename ConstIt, typename Comp >
+std::vector< size_t > sorted_indices(ConstIt first, ConstIt last, Comp compare);
+```
+który zwraca indeksy elementów podanego zakresu `[first, last)` po jego posortowaniu przy użyciu funktora porównującego `compare`.
+Algorytm nie powinien modyfikować zakresu.
+Zachowanie jest analogiczne do napisania w MATLABie `[~, i] = sort(v)`.
+Innymi słowy, poniższy kod powinien się wykonać:
+```C++
+std::vector<unsigned> v = { /* ... */ };
+auto r = sorted_indices(v.begin(), v.end(), std::less<unsigned>{});
+int a = 0;
+for(size_t i = 0; i < v.size(); ++i)
+{
+    assert(a <= v[r[i]]);
+    a = v[r[i]];
+}
+```
+
+Przykład:
+- input: \[1 10 2 9 3 8 4 7 5 6\]
+- output: \[0 2 4 6 8 9 7 5 3 1\]
+
+Podpowiedzi:
+1. Załóż, że podany iterator jest losowego dostępu.
+Iteratory losowego dostępu mają zdefiniowany operator `[ ]`, który pozwala na indeksowanie elementów następujących po danym iteratorze.
+Na przykład:
+```C++
+std::vector<int> v = {1, 2, 3, 4, 5};
+auto it = v.begin();
+int a = it[2]; // a ma wartość 3
+```
+2. Funkcja `std::distance` zwraca odległość między dwoma iteratorami (np. dla `begin` i `end` będzie to rozmiar kontenera).
+3. Możesz użyć algorytmu `std::iota` (z nagłówka `numeric`) do generacji wektora kolejnych rosnących liczb całkowitych (zwięźlejszy zapis niż pętla for).
+4. W ostateczności możesz spojrzeć na [rozwiązanie](https://godbolt.org/z/3qaE8r).
