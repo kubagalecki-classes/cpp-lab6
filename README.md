@@ -56,7 +56,7 @@ Znajdź w nim pierwsze wystąpienie liczby 7.
 Posortuj elementy wektora występujące przed znalezioną liczbą 7 (lub cały wektor, jeżeli 7 nie występuje).
 Użyj `std::find` i `std::sort`.
 
-**Przykład:**
+Przykład:
 - input: \[3 2 1 7 9 7 8 10\]
 - output: \[1 2 3 7 9 7 8 10\]
 
@@ -73,7 +73,7 @@ Znajdź w nim pierwsze wystąpienie liczby 7.
 Przesuń elementy wektora występujące przed znalezioną liczbą 7 na koniec wektora (zachowaj ich kolejność).
 Użyj `std::find` i `std::rotate`.
 
-**Przykład:**
+Przykład:
 - input: \[3 2 1 7 9 7 8 10\]
 - output: \[7 9 7 8 10 3 2 1\]
 
@@ -93,7 +93,7 @@ Stwórz wektor losowych liczb całkowitych z przedziału \[0, 10\].
 Przestaw jego elementy tak, aby najpierw wystąpiły wszystkie liczby większe od 6 (poza tym wymaganiem mogą być one dowolnie przestawione).
 Następnie posortuj część zakresu zawierającą elementy większe od 6.
 
-**Przykład:**
+Przykład:
 - input: \[1 2 3 4 5 6 7 8 9 10\]
 - output (jeden z dopuszczalnych): \[7 8 9 10 3 1 5 6 2 4\]
 
