@@ -6,9 +6,13 @@ Zanim przejdziemy do ich opisu, podsumujmy pokrótce poznane dotychczas zagadnie
 - kontenery i iteratory - algorytmy operują na zakresach elementów kontenerów zdefiniowanych przez parę iteratorów
 - przeciążanie operatorów - działanie algorytmów możemy dodatkowo modyfikować podając do nich funktory, tzn. obiekty posiadające przeciążenie operatora `( )`.
 
-Zwięzłe omówienie wszystkich algorytmów dostępnych w STL dostępne jest np. [tutaj](https://youtu.be/2olsGf6JIkU).
+Biblioteka standardowa oferuje w nagłówkach `algorithm` i `numeric` szeroki wachlarz różnych algorytmów.
+Zwięzły przegląd algorytmów dostępnych w STL można zobaczyć np. [tutaj](https://youtu.be/2olsGf6JIkU).
+Celem zajęć nie jest jednak omówienie ich wszystkich, lecz zaprezentowanie ogólnej idei ich wykorzystania.
+Nadzieją autora jest aby po wykonaniu instrukcji do poznania działania nowego algorytmu wystarczyło jedynie szybkie zerknięcie do odpowiedniej referencji.
+Z tego powodu nie będziemy też tłumaczyć szczegółów dzałania poszczególnych algorytmów, lecz odsyłamy czytelnika do [dokumentacji](https://en.cppreference.com/w/cpp/algorithm).
 
-Z gotowych algorytmów STL warto korzystać z następujących 3 powodów:
+Z algorytmów STL warto korzystać z następujących 3 powodów:
 - Uzyskujemy dostęp do wydajnych implementacji dużej liczby algorytmów.
 Najlepszym przykładem jest tutaj sortowanie.
 Jest to jeden z najstarszych problemów w informatyce, którego wydajne rozwiązanie stanowi jednak temat badań po dzień dzisiejszy (bardzo ciekawy wykład na ten temat można znaleźć [tutaj](https://youtu.be/FJJTYQYB1JQ)).
@@ -19,16 +23,29 @@ Jest to kluczowa sprawa przy programowaniu, szczególnie w środowisku komercyjn
 Gdy praca odbywa się w zespołach, bardzo ważne jest, aby ich członkowie mogli możliwie jak najszybciej zrozumieć kod napisany przez innych.
 
 ## Anatomia std::algorytmu
+Każdy algorytm STL operuje na zakresie elementów, definiowanych przez iteratory.
+Zdecydowana większość przyjmuje parę iteratorów, która definiuje zakres zgodnie z konwencją `[first, last)`, tzn. przedział na który wskazują jest domknięty z lewej strony i otwarty z prawej (podobnie jak iteratory zwracane przez metody `begin` i `end` kontenerów).
+Dzięki temu algorytm jest niezależny od kontenera, na którego elementach ma operować.
+Zobaczmy teraz, że już para iteratorów wystarczy, aby zrobić coś ciekawego.
 
 #### Zadanie 1
-Wygeneruj wektor losowych liczb całkowitych.
+Wygeneruj wektor losowych liczb całkowitych z przedziału \[0, 10\] (użyj funkcji dołączonej do instrukcji).
 Wyświetl go.
 Posortuj go rosnąco używając algorytmu `std::sort`.
 Zweryfikuj poprawność działania algorytmu wyświetlając ponownie wektor.
 
-## Funktory
+Wiele algorytmów przyjmuje także dodatkowe parametry.
+Zobaczmy to na przykładzie.
 
 #### Zadanie 2
+Wygeneruj wektor losowych liczb całkowitych z przedziału \[0, 10\] (użyj funkcji dołączonej do instrukcji).
+Policz wystąpienia liczby 7 używając algorytmu `std::count`.
+
+## Funktory
+Czasem możemy chcieć dostroić nie tylko parametry, ale także elementy zachowania algorytmu.
+
+
+#### Zadanie 3
 Wygeneruj wektor losowych liczb całkowitych.
 Wyświetl go.
 Posortuj go malejąco używając algorytmu `std::sort` i odpowiedniego funktora.
@@ -36,7 +53,7 @@ Zweryfikuj poprawność działania algorytmu wyświetlając ponownie wektor.
 
 ### Lambdy
 
-#### Zadanie 3
+#### Zadanie 4
 
 ## Ćwiczenia
 Poniżej zamieszczono zadania treningowe, rozwiązanie których pomoże poznać kilka nowych algorytmów oraz przećwiczyć pracę z szablonami funkcji dostępnymi w nagłówkach `algorithm` i `numeric`.
