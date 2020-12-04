@@ -4,7 +4,19 @@ Dzisiejsze zajęcia dotyczyły będą algorytmów biblioteki STL.
 Zanim przejdziemy do ich opisu, podsumujmy pokrótce poznane dotychczas zagadnienia, które pozwolą nam na zrozumienie zasady ich działania:
 - szablony funkcji - wszystkie algorytmy dostępne w STL to szablony funkcji
 - kontenery i iteratory - algorytmy operują na zakresach elementów kontenerów zdefiniowanych przez parę iteratorów
-- przeciążanie operatorów - działanie algorytmów możemy 
+- przeciążanie operatorów - działanie algorytmów możemy dodatkowo modyfikować podając do nich funktory, tzn. obiekty posiadające przeciążenie operatora `( )`.
+
+Zwięzłe omówienie wszystkich algorytmów dostępnych w STL dostępne jest np. [tutaj](https://youtu.be/2olsGf6JIkU).
+
+Z gotowych algorytmów STL warto korzystać z następujących 3 powodów:
+- Uzyskujemy dostęp do wydajnych implementacji dużej liczby algorytmów.
+Najlepszym przykładem jest tutaj sortowanie.
+Jest to jeden z najstarszych problemów w informatyce, którego wydajne rozwiązanie stanowi jednak temat badań po dzień dzisiejszy (bardzo ciekawy wykład na ten temat można znaleźć [tutaj](https://youtu.be/FJJTYQYB1JQ)).
+- Skracamy kod oraz czas jego pisania.
+Często zawiłe pętle for można zamienić na 1 elegancką linijkę.
+- Zwiększenie ekspresyjności kodu.
+Jest to kluczowa sprawa przy programowaniu, szczególnie w środowisku komercyjnym.
+Gdy praca odbywa się w zespołach, bardzo ważne jest, aby ich członkowie mogli możliwie jak najszybciej zrozumieć kod napisany przez innych.
 
 ## Anatomia std::algorytmu
 
@@ -126,7 +138,7 @@ Przykład:
 
 Podpowiedzi:
 1. Załóż, że podany iterator jest losowego dostępu.
-Iteratory losowego dostępu mają zdefiniowany operator `[ ]`, który pozwala na indeksowanie elementów następujących po danym iteratorze.
+Iteratory losowego dostępu STL mają zdefiniowany operator `[ ]`, który pozwala na indeksowanie elementów następujących po danym iteratorze.
 Na przykład:
 ```C++
 std::vector<int> v = {1, 2, 3, 4, 5};
