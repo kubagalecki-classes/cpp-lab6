@@ -57,8 +57,8 @@ Posortuj elementy wektora występujące przed znalezioną liczbą 7 (lub cały w
 Użyj `std::find` i `std::sort`.
 
 **Przykład:**
-input: \[3 2 1 7 9 7 8 10\]
-output: \[1 2 3 7 9 7 8 10\]
+- input: \[3 2 1 7 9 7 8 10\]
+- output: \[1 2 3 7 9 7 8 10\]
 
 #### Ćwiczenie VI - idiom *remove-erase*
 Stwórz wektor losowych liczb całkowitych z przedziału \[0, 10\].
@@ -74,8 +74,8 @@ Przesuń elementy wektora występujące przed znalezioną liczbą 7 na koniec we
 Użyj `std::find` i `std::rotate`.
 
 **Przykład:**
-input: \[3 2 1 7 9 7 8 10\]
-output: \[7 9 7 8 10 3 2 1\]
+- input: \[3 2 1 7 9 7 8 10\]
+- output: \[7 9 7 8 10 3 2 1\]
 
 ### Algorytmy przyjmujące funktory
 #### Ćwiczenie VIII - sprawdzenie czy elementy z zakresu spełniają warunek logiczny
@@ -94,7 +94,7 @@ Przestaw jego elementy tak, aby najpierw wystąpiły wszystkie liczby większe o
 Następnie posortuj część zakresu zawierającą elementy większe od 6.
 
 **Przykład:**
-input: \[1 2 3 4 5 6 7 8 9 10\]
-output (jeden z dopuszczalnych): \[7 8 9 10 3 1 5 6 2 4\]
+- input: \[1 2 3 4 5 6 7 8 9 10\]
+- output (jeden z dopuszczalnych): \[7 8 9 10 3 1 5 6 2 4\]
 
 ### Zadania trudniejsze
