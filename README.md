@@ -92,9 +92,10 @@ Użyj algorytmu `std::transform`.
 Stwórz wektor losowych liczb całkowitych z przedziału \[0, 10\].
 Przestaw jego elementy tak, aby najpierw wystąpiły wszystkie liczby większe od 6 (poza tym wymaganiem mogą być one dowolnie przestawione).
 Następnie posortuj część zakresu zawierającą elementy większe od 6.
+Użyj `std::partition` i `std::sort`.
 
 Przykład:
-- input: \[1 2 3 4 5 6 7 8 9 10\]
+- input: \[1 10 2 9 3 8 4 7 5 6\]
 - output (jeden z dopuszczalnych): \[7 8 9 10 3 1 5 6 2 4\]
 
 ### Zadania trudniejsze
