@@ -9,7 +9,7 @@ Zanim przejdziemy do ich opisu, podsumujmy pokrótce poznane dotychczas zagadnie
 Biblioteka standardowa oferuje w nagłówkach `algorithm` i `numeric` szeroki wachlarz różnych algorytmów.
 Zwięzły przegląd algorytmów dostępnych w STL można zobaczyć np. [tutaj](https://youtu.be/2olsGf6JIkU).
 Celem zajęć nie jest jednak omówienie ich wszystkich, lecz zaprezentowanie ogólnej idei ich wykorzystania.
-Nadzieją autora jest aby po wykonaniu instrukcji do poznania działania nowego algorytmu wystarczyło jedynie szybkie zerknięcie do odpowiedniej referencji.
+Nadzieją autora jest, aby po wykonaniu instrukcji do poznania działania nowego algorytmu wystarczyło czytelnikowi jedynie szybkie zerknięcie do odpowiedniej referencji.
 Z tego powodu nie będziemy też tłumaczyć szczegółów dzałania poszczególnych algorytmów, lecz odsyłamy czytelnika do [dokumentacji](https://en.cppreference.com/w/cpp/algorithm).
 
 Z algorytmów STL warto korzystać z następujących 3 powodów:
@@ -50,7 +50,7 @@ Aby sortować malejąco, wystarczy zamienić operator `<` na operator `>`.
 Argument ten musi być funktorem przyjmującym 2 argumenty sortowanego typu.
 Funktor to po prostu obiekt, dla którego możemy zawołać metodę `operator()`.
 Może to być zatem np. obiekt klasy, dla której odpowiednio przeciążony jest ten operator, albo wskaźnik do odpowiedniej funkcji.
-Po szczegółową dyskusję funktorów odsyłamy czytelnika do drugiego akapitu podrozdziału pt. `std::visit` instrukcji nr 4.
+Po szczegółową dyskusję dotyczącą funktorów odsyłamy czytelnika do drugiego akapitu podrozdziału pt. `std::visit` instrukcji nr 4.
 
 #### Zadanie 3
 Wygeneruj wektor losowych liczb całkowitych.
@@ -82,8 +82,8 @@ Ich destruktor wołany jest więc dopiero po wyjściu z funkcji `main`.
 Jest to mało optymalne oraz bardzo pogarsza przejrzystość kodu (czytając kod i natrafiając nagle na jakieś dziwne parametry globalne możemy nie rozumieć, skąd one się w ogóle biorą).
 Szczęśliwie, w odróżnieniu od C, w C++ możemy korzystać z funktorów posiadających stan (ang. *stateful*).
 Oznacza to, że możemy zdefiniować klasę, przeciążającą operator `( )` oraz posiadającą jakieś pola.
-Możemy do algorytmu podać obiekt takiej klasy, którego polom wcześniej przypisaliśmy odpowiednie parametry.
-Czas jego życia jest ograniczony, a jego sens istnienia widoczny na pierwszy rzut oka (nie ma więc problemu z czytelnością).
+Możemy następnie podać do algorytmu obiekt takiej klasy, którego polom wcześniej przypisaliśmy odpowiednie parametry.
+Czas jego życia jest ograniczony, a jego sens istnienia widoczny jest na pierwszy rzut oka (nie ma więc problemu z czytelnością).
 
 #### Zadanie 6
 Wykonaj zadanie 5, tym razem posługując się funktorem posiadającym stan.
@@ -117,7 +117,7 @@ Jak widać nie dzieje się tu nic magicznego, po prostu definiowane są za nas k
 Użycie funkcji anonimowych pozwala nam jednak oszczędzić sporo wysiłku.
 
 Lambdy przedstawione powyżej można śmiało zastąpić tradycyjnymi funkcjami, jedyna korzyść z ich użycia to niewielka oszczędność czasu oraz ograniczenie widoczności nazwy funkcji pomocniczej do bieżącego scope'u.
-Zobaczmy teraz, do czego służy *capture* lambdy (autor nie zna dobrego i zwięzłego ekwiwalentu tego określenia w języku polskim, o *capture* w kontekście regexów mówi się czasem kolokwialnie o "grupie kapturkowej").
+Zobaczmy teraz, do czego służy *capture* lambdy (autor nie zna dokładnego i zwięzłego ekwiwalentu tego określenia w języku polskim, o *capture* w kontekście regexów nazywa się czasem kolokwialnie "grupą kapturkową").
 W nawiasach kwadratowych możemy "łapać" zmienne ze scope'u, w którym zdefiniowana została lambda.
 Możemy to robić przez kopię lub referencję (a także przeniesienie, jeżeli jest taka potrzeba).
 W instrukcji ograniczymy się do łapania przez referencję całego scope'u.
