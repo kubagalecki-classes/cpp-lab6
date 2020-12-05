@@ -43,7 +43,14 @@ Policz wystąpienia liczby 7 używając algorytmu `std::count`.
 
 ## Funktory
 Czasem możemy chcieć dostroić nie tylko parametry, ale także elementy zachowania algorytmu.
-
+Na przykład, możemy chcieć posortować zakres nie rosnąco, lecz malejąco.
+Domyślnie, algorytm `std::sort` porównuje elementy operatorem `<`.
+Aby sortować malejąco, wystarczy zamienić operator `<` na operator `>`.
+`std::sort` daje nam możliwie ogólny interfejs: możemy podać dodatkowy argument, który definiuje dla algorytmu operację porównania.
+Argument ten musi być funktorem przyjmującym 2 argumenty sortowanego typu.
+Funktor to po prostu obiekt, dla którego możemy zawołać metodę `operator()`.
+Może to być zatem np. obiekt klasy, dla której odpowiednio przeciążony jest ten operator, albo wskaźnik do odpowiedniej funkcji.
+Po szczegółową dyskusję funktorów odsyłamy czytelnika do drugiego akapitu podrozdziału pt. `std::visit` instrukcji nr 4.
 
 #### Zadanie 3
 Wygeneruj wektor losowych liczb całkowitych.
@@ -51,9 +58,89 @@ Wyświetl go.
 Posortuj go malejąco używając algorytmu `std::sort` i odpowiedniego funktora.
 Zweryfikuj poprawność działania algorytmu wyświetlając ponownie wektor.
 
-### Lambdy
+Zobaczmy inny przykład, gdzie przydatne mogą być funktory.
 
 #### Zadanie 4
+Wygeneruj wektor losowych liczb całkowitych z przedziału \[0, 10\] (użyj funkcji dołączonej do instrukcji).
+Policz wystąpienia liczb większych od 7 używając algorytmu `std::count_if`.
+
+W zadaniu 4 wykorzystaliśmy fakt, że liczba, do której porównywaliśmy elementy wektora, była znana w czasie kompilacji (ponieważ 7 występuje jawnie w treści zadania).
+W kodzie wystąpiła zatem w pewnym miejscu linijka typu `return x > 7`.
+Co jednak, jeżeli potrzebujemy przekazać do funktora parametry, które poznamy dopiero w czasie wykonania programu?
+Przykładem takiego problemu jest zadanie 5.
+Przeczytajmy teraz jego treść (ale jeszcze go nie wykonujmy).
+Zazwyczaj, gdy chcemy przekazać do funkcji (lub funktora) jakieś parametry, dołączamy je do listy argumentów.
+Tutaj nie mamy jednak tej opcji, gdyż `std::count_if` wymaga konkrentej sygnatury funkcji (funktora).
+Najprostszym (i najgorszym) sposobem rozwiązania tego problemu jest zdefiniowanie globalnych zmiennej, której wartość wczytujemy z konsoli, a następnie odczytujemy w ciele funkcji (funktora).
+Spróbujmy teraz wykonać w ten sposób poniższe polecenie.
+
+#### Zadanie 5
+Napisz program, który generuje wektor losowych liczb z przedziału [0, 10], wczytuje z konsoli liczbę całkowitą `a`, a następnie drukuje liczbę elementów wektora większych od `a`.
+
+W języku C++ unikamy za wszelką cenę obiektów globalnych, gdyż ich czas życia nie jest w żaden sposób ograniczony (jest równy czasowi wykonania progrmu).
+Ich destruktor wołany jest więc dopiero po wyjściu z funkcji `main`.
+Jest to mało optymalne oraz bardzo pogarsza przejrzystość kodu (czytając kod i natrafiając nagle na jakieś dziwne parametry globalne możemy nie rozumieć, skąd one się w ogóle biorą).
+Szczęśliwie, w odróżnieniu od C, w C++ możemy korzystać z funktorów posiadających stan (ang. *stateful*).
+Oznacza to, że możemy zdefiniować klasę, przeciążającą operator `( )` oraz posiadającą jakieś pola.
+Możemy do algorytmu podać obiekt takiej klasy, którego polom wcześniej przypisaliśmy odpowiednie parametry.
+Czas jego życia jest ograniczony, a jego sens istnienia widoczny na pierwszy rzut oka (nie ma więc problemu z czytelnością).
+
+#### Zadanie 6
+Wykonaj zadanie 5, tym razem posługując się funktorem posiadającym stan.
+Zdefiniuj klasę posiadającą pole typu całkowitego oraz przeciążającą odpowiednio operator `( )`.
+Stwórz obiekt tej klasy, przypisz do jego pola wartość wczytaną z klawiatury, a następnie podaj go do `std::count_if`.
+
+### Wyrażenia lambda
+Aby uniknąć konieczności definiowania nowych klas za każdym razem, gdy chcemy stworzyć relatywnie prosty funktor, od C++11 możemy używać wyrażeń lambda (zwanych także funkcjami anonimowymi, a potocznie po prostu lambdami).
+Wyrażenie lambda ma następującą składnię (po wszystkie szczegóły odsyłamy jak zawsze do [dokumentacji](https://en.cppreference.com/w/cpp/language/lambda)):
+```C++
+[ /* capture */ ] ( /* argumenty */ ) { /* ciało */ }
+```
+Tworzy ono obiekt funkcyjny (funktor), którego operator nawiasów okrągłych przyjmuje argumenty wskazanego typu i wykonuje na nich operacje zdefiniowane w ciele (zupełnia jak tradycyjna funkcja!).
+Nawiasy kwadratowe i rolę *capture* omówimy za chwilę.
+Na razie zobaczmy prosty przykład definicji lambdy, która zwraca sinus argumentu:
+```C++
+auto lambda_sin = [](double x){ return sin(x); }; // lambda_sin jest funktorem
+double x = M_PI / 2.;
+double sin_x = lambda_sin(x); // sin_x == 1. (+/- błąd zmiennoprzecinkowy)
+```
+Typ zmiennej `lambda_sin` jest nadawany przez kompilator, w związku z czym musimy użyć słowa kluczowego `auto`.
+Nie musimy jednak przypisywać lambdy do zmiennej, możemy użyć jej jako rvalue:
+```C++
+double x = M_PI / 2.;
+double sin_x = [](double x){ return sin(x); }(x);
+```
+Tak będziemy też najczęściej postępować w przypadku algorytmów, gdzie zazwyczaj definiujemy wyrażenie lambda bezpośrednio w liście argumentów.
+Korzystanie z prostych lambd obrazuje także ten [kawałek kodu](https://godbolt.org/z/K8PqeW).
+Zachęcamy czytelnika do podejrzenia, jak tak naprawdę kompilator je rozwija (należy wcisnąć przycisk "Cpp Insights", a następnie przycisk "Play").
+Jak widać nie dzieje się tu nic magicznego, po prostu definiowane są za nas klasy z odpowiednimi polami i operatorami.
+Użycie funkcji anonimowych pozwala nam jednak oszczędzić sporo wysiłku.
+
+Lambdy przedstawione powyżej można śmiało zastąpić tradycyjnymi funkcjami, jedyna korzyść z ich użycia to niewielka oszczędność czasu oraz ograniczenie widoczności nazwy funkcji pomocniczej do bieżącego scope'u.
+Zobaczmy teraz, do czego służy *capture* lambdy (autor nie zna dobrego i zwięzłego ekwiwalentu tego określenia w języku polskim, o *capture* w kontekście regexów mówi się czasem kolokwialnie o "grupie kapturkowej").
+W nawiasach kwadratowych możemy "łapać" zmienne ze scope'u, w którym zdefiniowana została lambda.
+Możemy to robić przez kopię lub referencję (a także przeniesienie, jeżeli jest taka potrzeba).
+W instrukcji ograniczymy się do łapania przez referencję całego scope'u.
+Dodając do definicji lambdy jeden znak - `&` - zyskujemy w jej ciele dostęp do wszystkich zmiennych, które widoczne są dla jej definicji.
+Na przykład:
+```C++
+double omega = M_PI;
+double phi   = M_PI / 2.;
+
+// Błąd kompilacji - omega i phi są niewidoczne w środku lambdy
+auto bad_harmonic = [](double t){ return sin(omega * t + phi); };
+
+// OK - łapiemy referencje do omega i phi
+auto good_harmonic = [&](double t){ return sin(omega * t + phi); };
+
+// Korzystamy tak samo
+double t0 = 0;
+double y0 = good_harmonic(t0);
+```
+Nie musimy zatem samodzielnie definiować dodatkowej klasy, tak jak w zadaniu 6!
+
+#### Zadanie 7
+Wykonaj ponownie zadanie 6, tym razem posługując się lambdą zamiast funktorem jawnie zdefiniowanej klasy.
 
 ## Ćwiczenia
 Poniżej zamieszczono zadania treningowe, rozwiązanie których pomoże poznać kilka nowych algorytmów oraz przećwiczyć pracę z szablonami funkcji dostępnymi w nagłówkach `algorithm` i `numeric`.
