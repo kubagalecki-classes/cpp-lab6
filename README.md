@@ -2,6 +2,7 @@
 ## Wstęp
 Dzisiejsze zajęcia dotyczyły będą algorytmów biblioteki STL.
 Zanim przejdziemy do ich opisu, podsumujmy pokrótce poznane dotychczas zagadnienia, które pozwolą nam na zrozumienie zasady ich działania:
+
 - szablony funkcji - wszystkie algorytmy dostępne w STL to szablony funkcji
 - kontenery i iteratory - algorytmy operują na zakresach elementów kontenerów zdefiniowanych przez parę iteratorów
 - przeciążanie operatorów - działanie algorytmów możemy dodatkowo modyfikować podając do nich funktory, tzn. obiekty posiadające przeciążenie operatora `( )`.
@@ -13,6 +14,7 @@ Nadzieją autora jest, aby po wykonaniu instrukcji do poznania działania nowego
 Z tego powodu nie będziemy też tłumaczyć szczegółów dzałania poszczególnych algorytmów, lecz odsyłamy czytelnika do [dokumentacji](https://en.cppreference.com/w/cpp/algorithm).
 
 Z algorytmów STL warto korzystać z następujących 3 powodów:
+
 - Uzyskujemy dostęp do wydajnych implementacji dużej liczby algorytmów.
 Najlepszym przykładem jest tutaj sortowanie.
 Jest to jeden z najstarszych problemów w informatyce, którego wydajne rozwiązanie stanowi jednak temat badań po dzień dzisiejszy (bardzo ciekawy wykład na ten temat można znaleźć [tutaj](https://youtu.be/FJJTYQYB1JQ)).
@@ -93,23 +95,29 @@ Stwórz obiekt tej klasy, przypisz do jego pola wartość wczytaną z klawiatury
 ### Wyrażenia lambda
 Aby uniknąć konieczności definiowania nowych klas za każdym razem, gdy chcemy stworzyć relatywnie prosty funktor, od C++11 możemy używać wyrażeń lambda (zwanych także funkcjami anonimowymi, a potocznie po prostu lambdami).
 Wyrażenie lambda ma następującą składnię (po wszystkie szczegóły odsyłamy jak zawsze do [dokumentacji](https://en.cppreference.com/w/cpp/language/lambda)):
+
 ```C++
 [ /* capture */ ] ( /* argumenty */ ) { /* ciało */ }
 ```
+
 Tworzy ono obiekt funkcyjny (funktor), którego operator nawiasów okrągłych przyjmuje argumenty wskazanego typu i wykonuje na nich operacje zdefiniowane w ciele (zupełnia jak tradycyjna funkcja!).
 Nawiasy kwadratowe i rolę *capture* omówimy za chwilę.
 Na razie zobaczmy prosty przykład definicji lambdy, która zwraca sinus argumentu:
+
 ```C++
 auto lambda_sin = [](double x){ return sin(x); }; // lambda_sin jest funktorem
 double x = M_PI / 2.;
 double sin_x = lambda_sin(x); // sin_x == 1. (+/- błąd zmiennoprzecinkowy)
 ```
+
 Typ zmiennej `lambda_sin` jest nadawany przez kompilator, w związku z czym musimy użyć słowa kluczowego `auto`.
 Nie musimy jednak przypisywać lambdy do zmiennej, możemy użyć jej jako rvalue:
+
 ```C++
 double x = M_PI / 2.;
 double sin_x = [](double x){ return sin(x); }(x);
 ```
+
 Tak będziemy też najczęściej postępować w przypadku algorytmów, gdzie zazwyczaj definiujemy wyrażenie lambda bezpośrednio w liście argumentów.
 Korzystanie z prostych lambd obrazuje także ten [kawałek kodu](https://godbolt.org/z/K8PqeW).
 Zachęcamy czytelnika do podejrzenia, jak tak naprawdę kompilator je rozwija (należy wcisnąć przycisk "Cpp Insights", a następnie przycisk "Play").
@@ -117,12 +125,13 @@ Jak widać nie dzieje się tu nic magicznego, po prostu definiowane są za nas k
 Użycie funkcji anonimowych pozwala nam jednak oszczędzić sporo wysiłku.
 
 Lambdy przedstawione powyżej można śmiało zastąpić tradycyjnymi funkcjami, jedyna korzyść z ich użycia to niewielka oszczędność czasu oraz ograniczenie widoczności nazwy funkcji pomocniczej do bieżącego scope'u.
-Zobaczmy teraz, do czego służy *capture* lambdy (autor nie zna dokładnego i zwięzłego ekwiwalentu tego określenia w języku polskim, o *capture* w kontekście regexów nazywa się czasem kolokwialnie "grupą kapturkową").
+Zobaczmy teraz, do czego służy *capture* lambdy (autor nie zna dokładnego i zwięzłego ekwiwalentu tego określenia w języku polskim, *capture* w kontekście regexów nazywa się czasem kolokwialnie "grupą kapturkową").
 W nawiasach kwadratowych możemy "łapać" zmienne ze scope'u, w którym zdefiniowana została lambda.
 Możemy to robić przez kopię lub referencję (a także przeniesienie, jeżeli jest taka potrzeba).
 W instrukcji ograniczymy się do łapania przez referencję całego scope'u.
 Dodając do definicji lambdy jeden znak - `&` - zyskujemy w jej ciele dostęp do wszystkich zmiennych, które widoczne są dla jej definicji.
 Na przykład:
+
 ```C++
 double omega = M_PI;
 double phi   = M_PI / 2.;
@@ -137,6 +146,7 @@ auto good_harmonic = [&](double t){ return sin(omega * t + phi); };
 double t0 = 0;
 double y0 = good_harmonic(t0);
 ```
+
 Nie musimy zatem samodzielnie definiować dodatkowej klasy, tak jak w zadaniu 6!
 
 #### Zadanie 7
@@ -173,6 +183,7 @@ Posortuj elementy wektora występujące przed znalezioną liczbą 7 (lub cały w
 Użyj `std::find` i `std::sort`.
 
 Przykład:
+
 - input: \[3 2 1 7 9 7 8 10\]
 - output: \[1 2 3 7 9 7 8 10\]
 
@@ -190,6 +201,7 @@ Przesuń elementy wektora występujące przed znalezioną liczbą 7 na koniec we
 Użyj `std::find` i `std::rotate`.
 
 Przykład:
+
 - input: \[3 2 1 7 9 7 8 10\]
 - output: \[7 9 7 8 10 3 2 1\]
 
@@ -211,20 +223,24 @@ Następnie posortuj część zakresu zawierającą elementy większe od 6.
 Użyj `std::partition` i `std::sort`.
 
 Przykład:
+
 - input: \[1 10 2 9 3 8 4 7 5 6\]
 - output (jeden z dopuszczalnych): \[7 8 9 10 3 1 5 6 2 4\]
 
 ### Zadanie trudniejsze
 #### Ćwiczenie XI - indeksy sortowania
 Napisz algorytm `sorted_indices`, o sygnaturze:
+
 ```C++
 template < typename ConstIt, typename Comp >
 std::vector< size_t > sorted_indices(ConstIt first, ConstIt last, Comp compare);
 ```
+
 który zwraca indeksy elementów podanego zakresu `[first, last)` po jego posortowaniu przy użyciu funktora porównującego `compare`.
 Algorytm nie powinien modyfikować zakresu.
 Zachowanie jest analogiczne do napisania w MATLABie `[~, i] = sort(v)`.
 Innymi słowy, poniższy kod powinien się wykonać:
+
 ```C++
 std::vector<unsigned> v = { /* ... */ };
 auto r = sorted_indices(v.begin(), v.end(), std::less<unsigned>{});
@@ -237,18 +253,22 @@ for(size_t i = 0; i < v.size(); ++i)
 ```
 
 Przykład:
+
 - input: \[1 10 2 9 3 8 4 7 5 6\]
 - output: \[0 2 4 6 8 9 7 5 3 1\]
 
 Podpowiedzi:
+
 1. Załóż, że podany iterator jest losowego dostępu.
-Iteratory losowego dostępu STL mają zdefiniowany operator `[ ]`, który pozwala na indeksowanie elementów następujących po danym iteratorze.
+Iteratory losowego dostępu STL mają zdefiniowany operator `[]`, który pozwala na indeksowanie elementów następujących po danym iteratorze.
 Na przykład:
+
 ```C++
 std::vector<int> v = {1, 2, 3, 4, 5};
 auto it = v.begin();
 int a = it[2]; // a ma wartość 3
 ```
+
 2. Funkcja `std::distance` zwraca odległość między dwoma iteratorami (np. dla `begin` i `end` będzie to rozmiar kontenera).
 3. Możesz użyć algorytmu `std::iota` (z nagłówka `numeric`) do generacji wektora kolejnych rosnących liczb całkowitych (zwięźlejszy zapis niż pętla for).
-4. W ostateczności możesz spojrzeć na [rozwiązanie](https://godbolt.org/z/3qaE8r).
+4. W ostateczności możesz spojrzeć na [rozwiązanie](https://godbolt.org/z/bnvTcaeMf).
