@@ -8,9 +8,9 @@
 
 std::vector< char > foo(std::list< Human >& people)
 {
-    std::vector< char > ret_v(people.size());
+    std::vector< char > retval(people.size());
 
     // Twoja implementacja tutaj
 
-    return ret_v;
+    return retval;
 }
