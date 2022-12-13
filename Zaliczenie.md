@@ -11,5 +11,5 @@ Do sprawdzenia warunku użyj metody `isMonster`.
 Innymi słowy, jeżeli metoda `isMonster` *i*-tej osoby na liście zwróci wartość `true`, to (*n* - *i*)-ty element zwracanego wektora powinien mieć wartość `n`
 
 Użycie pętli for jest niedozwolone.
-Do zaliczenia zadania wykorzystaj algorytmy `std::for_each` oraz `std::transform` (lub inne, jeżeli uznasz to za stosowne).
-Zadanie można wykonać dopisując 2 (dość długie) linijki!
+Do zaliczenia zadania wykorzystaj algorytmy `std::for_each` lub `std::transform` (lub inne, jeżeli uznasz to za stosowne).
+Zadanie można wykonać dopisując 2 linijki (choć druga będzie zapewne dość długa)!
